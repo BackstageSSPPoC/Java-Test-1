@@ -13,35 +13,40 @@ public class Main {
         int port = 8080;
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
 
-        // Route: /
-        server.createContext("/", exchange -> {
-            String response = "{\"status\":\"UP\", \"message\":\"Hello from Java!\"}";
-            sendResponse(exchange, response);
+        server.createContext("/", new HttpHandler() {
+            public void handle(HttpExchange exchange) throws IOException {
+                String response = "{\"status\":\"UP\", \"message\":\"Hello from Java!\"}";
+                exchange.getResponseHeaders().set("Content-Type", "application/json");
+                exchange.sendResponseHeaders(200, response.getBytes().length);
+                OutputStream os = exchange.getResponseBody();
+                os.write(response.getBytes());
+                os.close();
+            }
         });
 
-        // Route: /hello
-        server.createContext("/hello", exchange -> {
-            String response = "{\"message\":\"Hello World from Java App!\"}";
-            sendResponse(exchange, response);
+        server.createContext("/hello", new HttpHandler() {
+            public void handle(HttpExchange exchange) throws IOException {
+                String response = "{\"message\":\"Hello World from Java App!\"}";
+                exchange.getResponseHeaders().set("Content-Type", "application/json");
+                exchange.sendResponseHeaders(200, response.getBytes().length);
+                OutputStream os = exchange.getResponseBody();
+                os.write(response.getBytes());
+                os.close();
+            }
+        });
+
+        server.createContext("/health", new HttpHandler() {
+            public void handle(HttpExchange exchange) throws IOException {
+                String response = "{\"status\":\"UP\"}";
+                exchange.getResponseHeaders().set("Content-Type", "application/json");
+                exchange.sendResponseHeaders(200, response.getBytes().length);
+                OutputStream os = exchange.getResponseBody();
+                os.write(response.getBytes());
+                os.close();
+            }
         });
 
         server.start();
-        System.out.println("Server running on port " + port);
+        System.out.println("Server started on port " + port);
     }
-
-    server.createContext("/", exchange -> {
-    String response = """
-        <html>
-        <body>
-            <h1>Hello from Java!</h1>
-            <p>Status: UP</p>
-        </body>
-        </html>
-        """;
-    exchange.getResponseHeaders().set("Content-Type", "text/html");  // ← html set karo
-    exchange.sendResponseHeaders(200, response.length());
-    OutputStream os = exchange.getResponseBody();
-    os.write(response.getBytes());
-    os.close();
-});
 }
