@@ -13,11 +13,15 @@
         <java.version>17</java.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+        <sonar.sources>.</sonar.sources>
+        <sonar.language>java</sonar.language>
     </properties>
 
     <build>
+        <!-- ← Yeh add karo — Maven ko batao source root me hai -->
+        <sourceDirectory>.</sourceDirectory>
+
         <plugins>
-            <!-- Creates a runnable fat JAR -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -29,6 +33,10 @@
                         </manifest>
                     </archive>
                     <finalName>app</finalName>
+                    <!-- ← Yeh add karo — target folder exclude karo -->
+                    <excludes>
+                        <exclude>target/**</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
         </plugins>
