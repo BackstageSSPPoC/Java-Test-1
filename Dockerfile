@@ -3,9 +3,9 @@ FROM maven:3.9.6-eclipse-temurin-17 AS builder
 WORKDIR /usr/src/app
 
 COPY pom.xml .
-COPY Main.java .          # ← src ./src nahi, sirf Main.java
+COPY Main.java .          
 
-RUN mvn package -DskipTests -B   # dependency:go-offline hata do — no deps hain
+RUN mvn package -DskipTests -B  
 
 FROM eclipse-temurin:17-jre-alpine
 
