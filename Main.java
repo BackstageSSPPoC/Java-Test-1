@@ -29,11 +29,19 @@ public class Main {
         System.out.println("Server running on port " + port);
     }
 
-    static void sendResponse(HttpExchange exchange, String response) throws IOException {
-        exchange.getResponseHeaders().set("Content-Type", "application/json");
-        exchange.sendResponseHeaders(200, response.length());
-        OutputStream os = exchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
-    }
+    server.createContext("/", exchange -> {
+    String response = """
+        <html>
+        <body>
+            <h1>Hello from Java!</h1>
+            <p>Status: UP</p>
+        </body>
+        </html>
+        """;
+    exchange.getResponseHeaders().set("Content-Type", "text/html");  // ← html set karo
+    exchange.sendResponseHeaders(200, response.length());
+    OutputStream os = exchange.getResponseBody();
+    os.write(response.getBytes());
+    os.close();
+});
 }
