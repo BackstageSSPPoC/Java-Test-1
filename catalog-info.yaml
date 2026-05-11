@@ -6,9 +6,9 @@ metadata:
   description: Service  Java-Test-1
 
   annotations:
-    github.com/project-slug: BackstageSSPPoC/ Java-Test-1
+    github.com/project-slug: BackstageSSPPoC/Java-Test-1
     backstage.io/techdocs-ref: dir:.
-    jenkins.io/job-full-name: Backstage_SSP_PoC/ Java-Test-1/main
+    jenkins.io/job-full-name: Backstage_SSP_PoC/Java-Test-1/main
     argocd/app-name:  java-test-1
     backstage.io/kubernetes-id:  Java-Test-1
     backstage.io/kubernetes-namespace: default
